@@ -2,5 +2,12 @@
     <string name="app_name">TraingWhere</string>
 
     <string name="signUp">Sign Up</string>
+    <string name="title_have_space">Have space</string>
+    <string name="message_have_space">Please Fill All Every blank</string>
+    <string name="title_user_false">User false</string>
+    <string name="message_user_false">No this user in my database</string>
+    <string name="title_password_false">Password false</string>
+    <string name="message_pass_false">Please try again false</string>
+
 
 </resources>
