@@ -35,10 +35,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         //Check Space
         if (nameString.equals("") || userString.equals("") || passwordString.equals("")) {
-
-
             // Have space
             Log.d("13decV1", "Have Space");
+            MyAlert myAlert = new MyAlert(SignUpActivity.this,"Have Space",
+                    "Pleae fill all blank",R.drawable.doremon48);
+            myAlert.myDialog();
         }
 
 
