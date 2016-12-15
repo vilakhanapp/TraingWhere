@@ -76,9 +76,13 @@ public class MainActivity extends AppCompatActivity {
                             R.drawable.rat48);
                     myAlert.myDialog();
                 } else if (passwordString.equals(loginStrings[3])) {
-                    //Password true
+                    //Password true open map activity
                     Toast.makeText(MainActivity.this, "Welcome " + loginStrings[1],
                             Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainActivity.this, ServiceActivity.class);
+                    intent.putExtra("Login", loginStrings);
+                    startActivity(intent);
+                    finish();
                 } else {
                     //Password false
                     MyAlert myAlert = new MyAlert(MainActivity.this,
