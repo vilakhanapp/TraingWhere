@@ -34,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.editText5);
     }
 
+
+    public void clickPass(View view) {
+        String[] strings = new String[]{"1","Name","User","Password"};
+        Intent intent = new Intent(MainActivity.this, ServiceActivity.class);
+        intent.putExtra("Login", strings);
+        startActivity(intent);
+
+    }
+
     public void clickSignIn(View view) {
         userString = userEditText.getText().toString().trim();
         passwordString = passwordEditText.getText().toString().trim();

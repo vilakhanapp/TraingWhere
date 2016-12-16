@@ -9,6 +9,8 @@
     <string name="title_password_false">Password false</string>
     <string name="message_pass_false">Please try again false</string>
     <string name="title_activity_service">Map</string>
+    <string name="title_noimage">No Image</string>
+    <string name="message_noimage">Please choose image</string>
 
 
 </resources>

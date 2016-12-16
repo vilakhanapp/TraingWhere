@@ -16,7 +16,8 @@ public class SynUser extends AsyncTask<Void,Void,String>{
 
     //Explicit
     private Context context;
-    private static final String urlJSON = "http://swiftcodingthai.com/ltc/get_user_ka.php";
+   // private static final String urlJSON = "http://swiftcodingthai.com/ltc/get_user_ka.php";
+   private static final String urlJSON = "http://lao-hosting.com/ltc/get_user_master.php";
 
     public SynUser(Context context) {
         this.context = context;
