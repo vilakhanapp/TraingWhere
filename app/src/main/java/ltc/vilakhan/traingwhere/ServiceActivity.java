@@ -1,6 +1,7 @@
 package ltc.vilakhan.traingwhere;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Criteria;
@@ -8,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,6 +27,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.jibble.simpleftp.SimpleFTP;
+
+import java.io.File;
 
 public class ServiceActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -36,10 +43,9 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
     private TextView textView;
     private EditText editText;
     private ImageView imageView, takePhotoImageView;
-    private String nameImageString;
+    private String nameImageString, pathImageString, urlImageString;
     private Uri uri;
     private boolean aBoolean = true;
-
 
 
     @Override
@@ -86,7 +92,7 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent,"Please choose App"),1);
+                startActivityForResult(Intent.createChooser(intent, "Please choose App"), 1);
             }
         });
 
@@ -115,7 +121,7 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
             imageView.setImageBitmap(bitmap);
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d("16decV1", "e changeImage ==> " + e.toString());
         }
     }
@@ -144,16 +150,75 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
         } else {
             //Data OK
 
-
+            uploadImage();
+            uploadString();
 
         }
 
 
-
-
     } // click save
 
+    private void uploadString() {
+        urlImageString = "http://lao-hosting.com/ltc/Image" +
+                pathImageString.substring(pathImageString.lastIndexOf("/"));
+        Log.d("16decV2", "urlImage ==> " + urlImageString);
 
+        try {
+            UpdateLTC updateLTC = new UpdateLTC(ServiceActivity.this,nameImageString,urlImageString,
+                    Double.toString(updateLatADouble),
+                    Double.toString(updateLngADouble));
+            updateLTC.execute();
+
+            if (Boolean.parseBoolean(updateLTC.get())) {
+                Toast.makeText(ServiceActivity.this,"Save Ok", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(ServiceActivity.this,"Cannot Save data", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void uploadImage() {
+
+        try {
+
+            //Permission
+            StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy
+                    .Builder().permitAll().build();
+            StrictMode.setThreadPolicy(threadPolicy);
+
+            //Find path image
+            String[] strings = new String[]{MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(uri, strings, null, null, null);
+            if (cursor != null) {
+
+                cursor.moveToFirst();
+                int i = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                pathImageString = cursor.getString(i);
+
+
+            } else {
+                pathImageString = uri.getPath();
+            }
+
+            Log.d("16decV2", "path = " + pathImageString);
+
+            SimpleFTP simpleFTP = new SimpleFTP();
+            simpleFTP.connect("ftp.lao-hosting.com", 21, "ltc@lao-hosting.com", "Abc12345");
+            simpleFTP.bin(); // image = string
+            simpleFTP.cwd("Image"); // directory in FTP
+            simpleFTP.stor(new File(pathImageString));
+            simpleFTP.disconnect();
+            Toast.makeText(ServiceActivity.this, "Update Image finish", Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+
+            Log.d("16decV2", "e upload ==> " + e.toString());
+        }
+
+    } // upload
 
 
     @Override
@@ -183,8 +248,6 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
         Log.d("15decV1", "lng = " + lngADouble);
 
     } // on Resume
-
-
 
 
     @Override
