@@ -8,7 +8,7 @@
         android:layout_width="150dp"
         android:layout_height="120dp"
 
-        android:id="@+id/imageView4"
+        android:id="@+id/imgicon"
         android:layout_margin="15dp" />
 
     <LinearLayout
@@ -21,27 +21,27 @@
             android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView7"
+            android:id="@+id/tv_name"
             android:textSize="30sp"
             android:textStyle="normal|bold"
-            android:textColor="?android:attr/statusBarColor" />
+            />
 
         <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView8"
+            android:id="@+id/tv_lat"
             android:textSize="18sp"
             android:textStyle="normal|italic"
-            android:textColor="?android:attr/statusBarColor" />
+            />
 
         <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView9"
+            android:id="@+id/tv_lng"
             android:textSize="18sp"
             android:textStyle="normal|italic"
-            android:textColor="?android:attr/statusBarColor" />
+           />
     </LinearLayout>
 </LinearLayout>

@@ -46,20 +46,19 @@ public class MyAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.my_listview, parent, false);
 
-        TextView nameTextView = (TextView) view.findViewById(R.id.textView7);
-        TextView latTextView = (TextView) view.findViewById(R.id.textView8);
-        TextView lngTextView = (TextView) view.findViewById(R.id.textView9);
-        ImageView iconImageView = (ImageView) view.findViewById(R.id.imageView4);
+        View view1 = layoutInflater.inflate(R.layout.my_listview, parent, false);
+
+        TextView nameTextView = (TextView) view1.findViewById(R.id.tv_name);
+        TextView latTextView = (TextView) view1.findViewById(R.id.tv_lat);
+        TextView lngTextView = (TextView) view1.findViewById(R.id.tv_lng);
+        ImageView iconImageView = (ImageView) view1.findViewById(R.id.imgicon);
 
         nameTextView.setText(nameStrings[position]);
         latTextView.setText("Lat = " + String.format("%.3f", Double.parseDouble(latStrings[position])));
         lngTextView.setText("Lng = " + String.format("%.3f", Double.parseDouble(lngStrings[position])));
 
         Picasso.with(context).load(iconStrings[position]).into(iconImageView);
-
-
-        return view;
+        return view1;
     }
 }// Main class
